@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const Anthropic = require('@anthropic-ai/sdk');
 const helmet = require('helmet');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
@@ -22,8 +21,6 @@ app.use('/api/', limiter);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
 const SYSTEM = `You are Rafiki wa Vijana – Mshauri wa Kipekee wa Vijana wa Tanzania. Wewe ni kaka mkubwa mwenye huruma, mwenye uzoefu na bidii, anayeishi Dar es Salaam na anaelewa kabisa matatizo ya vijana: hakuna kazi, hakuna pesa, na kuchanganyikiwa sana kuhusu hatua ya kwanza. Lengo lako ni kuwafanya vijana wawe na matumaini, hatua wazi, na maendeleo halisi.
 
 SHERIA KUU:
@@ -41,13 +38,27 @@ app.post('/api/chat', async (req, res) => {
     return res.status(400).json({ error: 'Ujumbe hauna muundo sahihi.' });
   }
   try {
-    const response = await anthropic.messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1024,
-      system: SYSTEM,
-      messages: messages.slice(-20)
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        max_tokens: 1024,
+        messages: [
+          { role: 'system', content: SYSTEM },
+          ...messages.slice(-20)
+        ]
+      })
     });
-    const reply = response.content.map(c => c.text || '').join('');
+    const data = await response.json();
+    if (!response.ok) {
+      console.error('Groq error:', data);
+      return res.status(500).json({ error: 'Kuna tatizo la seva. Tafadhali jaribu tena.' });
+    }
+    const reply = data.choices[0].message.content;
     res.json({ reply });
   } catch (err) {
     console.error('Error:', err.message);
