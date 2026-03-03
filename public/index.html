@@ -1,78 +1,92 @@
+
 <!DOCTYPE html>
 <html lang="sw">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Rafiki wa Vijana</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Rafiki</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet"/>
 <style>
-:root{--sand:#F5E6C8;--ochre:#D4820A;--rust:#B8430A;--forest:#2D5016;--dark:#1C1208;--accent:#E8A020;--bot-bg:#FFF8EE;--border:rgba(212,130,10,0.25)}
+:root{
+  --green:#1B5E20;--green2:#2E7D32;--green3:#43A047;
+  --gold:#FFD600;--gold2:#FFC107;
+  --dark:#0A1F0A;--bot-bg:#F1F8E9;--sand:#FFFDE7;
+  --border:rgba(255,214,0,0.25);--text-dark:#1A2E1A;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Nunito',sans-serif;background:var(--dark);height:100vh;display:flex;flex-direction:column;align-items:center;overflow:hidden}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(90deg,transparent,transparent 38px,rgba(212,130,10,0.04) 38px,rgba(212,130,10,0.04) 40px),repeating-linear-gradient(0deg,transparent,transparent 38px,rgba(212,130,10,0.04) 38px,rgba(212,130,10,0.04) 40px)}
-body::after{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(212,130,10,0.13) 0%,transparent 70%)}
-.app{position:relative;z-index:1;width:100%;max-width:760px;height:100vh;display:flex;flex-direction:column}
-header{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border);background:rgba(28,18,8,0.95);flex-shrink:0}
-.av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--ochre),var(--rust));display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;animation:pulse 2.5s ease-in-out infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(212,130,10,0.3)}50%{box-shadow:0 0 0 7px rgba(212,130,10,0.1),0 0 0 3px rgba(212,130,10,0.45)}}
-.htxt h1{color:var(--accent);font-weight:700;font-size:1.1rem}
-.htxt p{color:rgba(245,230,200,0.4);font-size:0.62rem;text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
-.online{width:8px;height:8px;border-radius:50%;background:#5DBB63;box-shadow:0 0 6px #5DBB63;margin-left:auto}
-#msgs{flex:1;overflow-y:auto;padding:16px 12px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--dark);height:100vh;height:100dvh;display:flex;flex-direction:column;align-items:center;overflow:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(90deg,transparent,transparent 38px,rgba(255,214,0,0.03) 38px,rgba(255,214,0,0.03) 40px),repeating-linear-gradient(0deg,transparent,transparent 38px,rgba(255,214,0,0.03) 38px,rgba(255,214,0,0.03) 40px)}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(255,214,0,0.08) 0%,transparent 70%)}
+.app{position:relative;z-index:1;width:100%;max-width:760px;height:100vh;height:100dvh;display:flex;flex-direction:column}
+header{display:flex;align-items:center;gap:11px;padding:12px 16px;border-bottom:1px solid var(--border);background:rgba(10,31,10,0.97);flex-shrink:0}
+.av{width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid var(--gold);box-shadow:0 0 0 3px rgba(255,214,0,0.15);animation:pulse 2.5s ease-in-out infinite}
+.av img{width:100%;height:100%;object-fit:cover}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(255,214,0,0.15)}50%{box-shadow:0 0 0 6px rgba(255,214,0,0.08),0 0 0 3px rgba(255,214,0,0.3)}}
+.htxt{flex:1}
+.htxt h1{color:var(--gold);font-weight:700;font-size:1.1rem;font-family:'Playfair Display',serif}
+.htxt p{color:rgba(255,253,231,0.45);font-size:0.61rem;text-transform:uppercase;letter-spacing:.05em;margin-top:1px}
+.online{width:8px;height:8px;border-radius:50%;background:#69F0AE;box-shadow:0 0 7px #69F0AE;flex-shrink:0}
+.lang-sw{display:flex;background:rgba(255,255,255,0.07);border-radius:20px;border:1px solid var(--border);overflow:hidden;flex-shrink:0}
+.lang-btn{padding:5px 11px;font-size:0.7rem;font-family:'Nunito',sans-serif;background:transparent;border:none;color:rgba(255,253,231,0.5);cursor:pointer;transition:all .2s;font-weight:600}
+.lang-btn.active{background:var(--gold);color:var(--dark);border-radius:20px}
+#msgs{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
 #msgs::-webkit-scrollbar{width:3px}
 #msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.row{display:flex;gap:8px;animation:up .35s cubic-bezier(.34,1.4,.64,1) both}
-@keyframes up{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+.row{display:flex;gap:8px;animation:up .3s cubic-bezier(.34,1.4,.64,1) both}
+@keyframes up{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
 .row.user{flex-direction:row-reverse}
-.rav{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:3px}
-.rav.bot{background:linear-gradient(135deg,var(--ochre),var(--rust))}
-.rav.user{background:var(--forest)}
+.rav{width:34px;height:34px;border-radius:50%;overflow:hidden;flex-shrink:0;margin-top:3px;border:1.5px solid var(--gold)}
+.rav img{width:100%;height:100%;object-fit:cover}
 .mwrap{display:flex;flex-direction:column;max-width:76%}
 .row.user .mwrap{align-items:flex-end}
-.bubble{padding:10px 14px;border-radius:16px;line-height:1.7;font-size:.865rem}
-.bot .bubble{background:var(--bot-bg);color:var(--dark);border-bottom-left-radius:3px;box-shadow:0 2px 8px rgba(0,0,0,.14)}
-.user .bubble{background:var(--forest);color:var(--sand);border-bottom-right-radius:3px;box-shadow:0 2px 8px rgba(0,0,0,.22)}
-.bubble strong{color:var(--rust)}
-.user .bubble strong{color:var(--accent)}
-.methali{font-style:italic;color:var(--rust);font-size:.84rem;display:block;margin:5px 0 3px;border-left:3px solid var(--ochre);padding-left:8px}
-.ts{font-size:.6rem;color:rgba(245,230,200,.25);margin-top:2px;padding:0 3px}
-.tbubble{background:var(--bot-bg);padding:12px 16px;border-radius:16px;border-bottom-left-radius:3px;display:flex;gap:5px;align-items:center}
-.d{width:7px;height:7px;border-radius:50%;background:var(--ochre);animation:bounce 1.2s ease-in-out infinite}
-.d:nth-child(2){animation-delay:.2s}.d:nth-child(3){animation-delay:.4s}
+.bubble{padding:10px 14px;border-radius:18px;line-height:1.7;font-size:.875rem;word-break:break-word}
+.bot .bubble{background:var(--bot-bg);color:var(--text-dark);border-bottom-left-radius:3px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.user .bubble{background:var(--green2);color:#FFFDE7;border-bottom-right-radius:3px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.bubble strong{color:var(--green)}
+.user .bubble strong{color:var(--gold)}
+.methali{font-style:italic;color:var(--green);font-size:.84rem;display:block;margin:5px 0 3px;border-left:3px solid var(--gold2);padding-left:8px}
+.ts{font-size:.6rem;color:rgba(255,253,231,.25);margin-top:2px;padding:0 3px}
+.tbubble{background:var(--bot-bg);padding:12px 16px;border-radius:18px;border-bottom-left-radius:3px;display:flex;gap:4px;align-items:center}
+.d{width:7px;height:7px;border-radius:50%;background:var(--green3);animation:bounce .8s ease-in-out infinite}
+.d:nth-child(2){animation-delay:.15s}.d:nth-child(3){animation-delay:.3s}
 @keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-6px);opacity:1}}
-.welcome{background:linear-gradient(135deg,rgba(45,80,22,.5),rgba(26,107,138,.28));border:1px solid rgba(212,130,10,.2);border-radius:16px;padding:16px 16px 12px}
-.welcome h2{color:var(--accent);font-weight:700;font-size:1.1rem;margin-bottom:6px}
-.welcome p{color:var(--sand);font-size:.82rem;line-height:1.7;opacity:.85}
+.welcome{background:linear-gradient(135deg,rgba(27,94,32,0.55),rgba(255,214,0,0.08));border:1px solid rgba(255,214,0,0.2);border-radius:16px;padding:16px 16px 13px}
+.welcome h2{color:var(--gold);font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:6px}
+.welcome p{color:#FFFDE7;font-size:.82rem;line-height:1.7;opacity:.85}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.chip{background:rgba(212,130,10,.13);border:1px solid rgba(212,130,10,.35);color:var(--accent);font-size:.7rem;padding:5px 11px;border-radius:20px;cursor:pointer;font-family:'Nunito',sans-serif;transition:background .15s}
-.chip:hover{background:rgba(212,130,10,.27)}
-.err{background:#5C1A1A;color:#FFC4B0;border:1px solid rgba(255,90,50,.25);padding:9px 14px;border-radius:12px;font-size:.8rem;text-align:center}
-.iarea{padding:10px 12px 14px;background:rgba(28,18,8,0.95);border-top:1px solid var(--border);flex-shrink:0}
+.chip{background:rgba(255,214,0,0.1);border:1px solid rgba(255,214,0,0.35);color:var(--gold);font-size:.7rem;padding:5px 11px;border-radius:20px;cursor:pointer;font-family:'Nunito',sans-serif;transition:background .15s}
+.chip:hover{background:rgba(255,214,0,0.22)}
+.err{background:#3E0000;color:#FF8A80;border:1px solid rgba(255,80,50,.25);padding:9px 14px;border-radius:12px;font-size:.8rem;text-align:center;animation:up .3s ease both}
+.iarea{padding:8px 12px 12px;background:rgba(10,31,10,0.97);border-top:1px solid var(--border);flex-shrink:0}
 .irow{display:flex;gap:8px;align-items:flex-end}
-textarea{flex:1;background:rgba(245,230,200,.07);border:1.5px solid var(--border);border-radius:13px;padding:10px 13px;color:var(--sand);font-family:'Nunito',sans-serif;font-size:.875rem;resize:none;min-height:44px;max-height:100px;outline:none;line-height:1.5;transition:border-color .2s}
-textarea::placeholder{color:rgba(245,230,200,.28)}
-textarea:focus{border-color:var(--ochre)}
-#sbtn{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--ochre),var(--rust));border:none;cursor:pointer;font-size:18px;color:white;flex-shrink:0;box-shadow:0 3px 10px rgba(184,67,10,.4);transition:transform .15s,opacity .15s}
-#sbtn:hover{transform:scale(1.09)}
-#sbtn:disabled{opacity:.4;cursor:not-allowed;transform:none}
-.hint{font-size:.6rem;color:rgba(245,230,200,.2);text-align:center;margin-top:6px}
+textarea{flex:1;background:rgba(255,255,255,0.07);border:1.5px solid var(--border);border-radius:24px;padding:11px 16px;color:#FFFDE7;font-family:'Nunito',sans-serif;font-size:.9rem;resize:none;min-height:46px;max-height:110px;outline:none;line-height:1.5;transition:border-color .2s}
+textarea::placeholder{color:rgba(255,253,231,0.28)}
+textarea:focus{border-color:var(--gold)}
+#sbtn{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 10px rgba(255,193,7,0.35);transition:transform .15s,opacity .15s}
+#sbtn svg{width:20px;height:20px;fill:var(--dark);transform:translateX(1px)}
+#sbtn:active{transform:scale(.93)}
+#sbtn:disabled{opacity:.35;cursor:not-allowed;transform:none}
 </style>
 </head>
 <body>
 <div class="app">
   <header>
-    <div class="av">🦁</div>
+    <div class="av"><img src="rafiki.jpg" alt="Rafiki" onerror="this.parentElement.innerHTML='🦁'"/></div>
     <div class="htxt">
-      <h1>Rafiki wa Vijana</h1>
-      <p>Mshauri wa Kipekee · Dar es Salaam</p>
+      <h1>Rafiki</h1>
+      <p id="app-sub">Mshauri wa Vijana.</p>
+    </div>
+    <div class="lang-sw">
+      <button class="lang-btn active" onclick="setLang('sw')">SW</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
     </div>
     <div class="online"></div>
   </header>
   <div id="msgs">
     <div class="welcome">
-      <h2>Karibu Sana! 🌟</h2>
-      <p>Mimi ni Rafiki wako — kaka mkubwa mwenye uzoefu anayekusaidia kupata kazi, kuanzisha biashara, au kujua hatua ya kwanza. Sisi tutafanikiwa pamoja!</p>
-      <div class="chips">
+      <h2 id="w-title">Karibu Sana! 🌟</h2>
+      <p id="w-desc">Mimi ni Rafiki wako — kaka mkubwa mwenye uzoefu anayekusaidia kupata kazi, kuanzisha biashara, au kujua hatua ya kwanza. Sisi tutafanikiwa pamoja!</p>
+      <div class="chips" id="chips-wrap">
         <span class="chip" onclick="chip(this)">Natafuta kazi 💼</span>
         <span class="chip" onclick="chip(this)">Biashara ndogo bila mtaji 🛒</span>
         <span class="chip" onclick="chip(this)">Digital skills za bure 📱</span>
@@ -83,13 +97,29 @@ textarea:focus{border-color:var(--ochre)}
   </div>
   <div class="iarea">
     <div class="irow">
-      <textarea id="inp" rows="1" placeholder="Andika hapa kaka/dada… niko hapa 🙏" onkeydown="onKey(event)" oninput="resize(this)"></textarea>
-      <button id="sbtn" onclick="send()">➤</button>
+      <textarea id="inp" rows="1" placeholder="Andika hapa… niko hapa 🙏" onkeydown="onKey(event)" oninput="resize(this);updateBtn()"></textarea>
+      <button id="sbtn" onclick="send()" disabled>
+        <svg viewBox="0 0 24 24"><path d="M2 21L23 12 2 3v7l15 2-15 2z"/></svg>
+      </button>
     </div>
-    <p class="hint">Enter kutuma · Shift+Enter mstari mpya</p>
   </div>
 </div>
 <script>
+let lang='sw';
+const T={
+  sw:{placeholder:'Andika hapa… niko hapa 🙏',sub:'Mshauri wa Vijana. ',wtitle:'Karibu Sana! 🌟',wdesc:'Mimi ni Rafiki wako — kaka mkubwa mwenye uzoefu anayekusaidia kupata kazi, kuanzisha biashara, au kujua hatua ya kwanza. Sisi tutafanikiwa pamoja!',chips:['Natafuta kazi 💼','Biashara ndogo bila mtaji 🛒','Digital skills za bure 📱','Mkopo wa vijana 💰','Sijui nianze wapi 😕'],welcome:'Habari kaka/dada! 🌟 Mimi ni Rafiki wako wa Vijana, niko hapa Dar es Salaam nikiwa tayari kukusaidia.\n\n**"Haba na haba hujaza kibaba"** — hatua ndogo ndogo ndiyo zinazofanya mabadiliko makubwa.\n\nNiambie — leo unakabiliwa na changamoto gani? 😊',err:'Tatizo la mtandao. Tafadhali jaribu tena.'},
+  en:{placeholder:'Type here… I am here for you 🙏',sub:'Youth Advisor.',wtitle:'Welcome! 🌟',wdesc:'I am Rafiki — your big brother with experience, here to help you find a job, start a business, or figure out your first step. We will succeed together!',chips:['Looking for a job 💼','Small business no capital 🛒','Free digital skills 📱','Youth loan 💰',"Don't know where to start 😕"],welcome:"Hello friend! 🌟 I am Rafiki, your Youth Advisor based in Dar es Salaam, ready to help you.\n\n**\"Little by little fills the measure\"** — small steps make big changes.\n\nTell me — what challenge are you facing today? 😊",err:'Network error. Please try again.'}
+};
+function setLang(l){
+  lang=l;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase()===l));
+  const t=T[l];
+  document.getElementById('inp').placeholder=t.placeholder;
+  document.getElementById('app-sub').textContent=t.sub;
+  document.getElementById('w-title').textContent=t.wtitle;
+  document.getElementById('w-desc').textContent=t.wdesc;
+  document.getElementById('chips-wrap').innerHTML=t.chips.map(c=>`<span class="chip" onclick="chip(this)">${c}</span>`).join('');
+}
 const hist=[];let busy=false;
 function now(){return new Date().toLocaleTimeString('sw-TZ',{hour:'2-digit',minute:'2-digit'})}
 function fmt(t){
@@ -100,29 +130,33 @@ function fmt(t){
   return t;
 }
 function addMsg(role,text){
-  const c=document.getElementById('msgs');
-  const isU=role==='user';
+  const c=document.getElementById('msgs'),isU=role==='user';
   const row=document.createElement('div');row.className='row '+role;
-  const av=document.createElement('div');av.className='rav '+role;av.textContent=isU?'🧑':'🦁';
+  const av=document.createElement('div');av.className='rav';
+  const img=document.createElement('img');
+  img.src=isU?'user.jpg':'rafiki.jpg';img.alt=isU?'User':'Rafiki';
+  img.onerror=function(){this.parentElement.innerHTML=isU?'🧑':'🦁'};
+  av.appendChild(img);
   const wrap=document.createElement('div');wrap.className='mwrap';
-  if(isU)wrap.style.alignItems='flex-end';
   const b=document.createElement('div');b.className='bubble';b.innerHTML=fmt(text);
   const ts=document.createElement('div');ts.className='ts';ts.textContent=now();
   wrap.appendChild(b);wrap.appendChild(ts);
-  if(isU){row.appendChild(wrap);row.appendChild(av);}
-  else{row.appendChild(av);row.appendChild(wrap);}
+  if(isU){row.appendChild(wrap);row.appendChild(av)}else{row.appendChild(av);row.appendChild(wrap)}
   c.appendChild(row);c.scrollTop=c.scrollHeight;
 }
 function addErr(msg){
-  const c=document.getElementById('msgs');
-  const e=document.createElement('div');e.className='err';e.textContent='⚠️ '+msg;
+  const c=document.getElementById('msgs'),e=document.createElement('div');
+  e.className='err';e.textContent='⚠️ '+msg;
   c.appendChild(e);c.scrollTop=c.scrollHeight;
   setTimeout(()=>e.remove(),6000);
 }
 function showTyping(){
-  const c=document.getElementById('msgs');
-  const row=document.createElement('div');row.className='row bot';row.id='trow';
-  const av=document.createElement('div');av.className='rav bot';av.textContent='🦁';
+  const c=document.getElementById('msgs'),row=document.createElement('div');
+  row.className='row bot';row.id='trow';
+  const av=document.createElement('div');av.className='rav';
+  const img=document.createElement('img');img.src='rafiki.jpg';img.alt='Rafiki';
+  img.onerror=function(){this.parentElement.innerHTML='🦁'};
+  av.appendChild(img);
   const b=document.createElement('div');b.className='tbubble';
   b.innerHTML='<div class="d"></div><div class="d"></div><div class="d"></div>';
   row.appendChild(av);row.appendChild(b);c.appendChild(row);c.scrollTop=c.scrollHeight;
@@ -132,28 +166,22 @@ async function send(text){
   const inp=document.getElementById('inp');
   const msg=(text!==undefined?text:inp.value).trim();
   if(!msg||busy)return;
-  inp.value='';resize(inp);
-  addMsg('user',msg);
-  hist.push({role:'user',content:msg});
-  busy=true;document.getElementById('sbtn').disabled=true;
-  showTyping();
+  inp.value='';resize(inp);updateBtn();
+  addMsg('user',msg);hist.push({role:'user',content:msg});
+  busy=true;showTyping();
   try{
     const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:hist})});
-    const d=await r.json();
-    hideTyping();
-    if(!r.ok){addErr(d.error||'Kuna tatizo la seva.');hist.pop();return;}
-    addMsg('bot',d.reply);
-    hist.push({role:'assistant',content:d.reply});
-  }catch(e){
-    hideTyping();
-    addErr('Tatizo la mtandao. Tafadhali jaribu tena.');
-    hist.pop();
-  }finally{busy=false;document.getElementById('sbtn').disabled=false;}
+    const d=await r.json();hideTyping();
+    if(!r.ok){addErr(d.error||T[lang].err);hist.pop();return}
+    addMsg('bot',d.reply);hist.push({role:'assistant',content:d.reply});
+  }catch{hideTyping();addErr(T[lang].err);hist.pop()}
+  finally{busy=false;updateBtn()}
 }
 function chip(el){send(el.textContent.replace(/[💼🛒📱💰😕]/g,'').trim())}
-function onKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
-function resize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px'}
-setTimeout(()=>addMsg('bot','Habari kaka/dada! 🌟 Mimi ni Rafiki wako wa Vijana, niko hapa Dar es Salaam nikiwa tayari kukusaidia.\n\n**"Haba na haba hujaza kibaba"** — hatua ndogo ndogo ndiyo zinazofanya mabadiliko makubwa.\n\nNiambie — leo unakabiliwa na changamoto gani? 😊'),700);
+function onKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}}
+function resize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,110)+'px'}
+function updateBtn(){document.getElementById('sbtn').disabled=!document.getElementById('inp').value.trim()||busy}
+setTimeout(()=>addMsg('bot',T[lang].welcome),700);
 </script>
 </body>
-  </html>
+</html>
