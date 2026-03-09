@@ -52,6 +52,8 @@ header{display:flex;align-items:center;gap:11px;padding:12px 16px;border-bottom:
 @keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-6px);opacity:1}}
 .welcome{background:linear-gradient(135deg,rgba(27,94,32,0.55),rgba(255,214,0,0.08));border:1px solid rgba(255,214,0,0.2);border-radius:16px;padding:16px 16px 13px}
 .welcome h2{color:var(--gold);font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:6px}
+.methali-rotate{font-family:'Playfair Display',serif;font-style:italic;color:var(--gold2);font-size:.85rem;border-left:3px solid var(--gold);padding:6px 10px;margin:8px 0;min-height:24px;transition:opacity .8s ease}
+.methali-rotate.fade{opacity:0}
 .welcome p{color:#FFFDE7;font-size:.82rem;line-height:1.7;opacity:.85}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
 .chip{background:rgba(255,214,0,0.1);border:1px solid rgba(255,214,0,0.35);color:var(--gold);font-size:.7rem;padding:5px 11px;border-radius:20px;cursor:pointer;font-family:'Nunito',sans-serif;transition:background .15s}
@@ -86,7 +88,8 @@ textarea:focus{border-color:var(--gold)}
     <div class="welcome">
       <h2 id="w-title">Karibu Sana! 🌟</h2>
       <p id="w-desc">Mimi ni Rafiki wako — kaka mkubwa mwenye uzoefu anayekusaidia kupata kazi, kuanzisha biashara, au kujua hatua ya kwanza. Sisi tutafanikiwa pamoja!</p>
-      <div class="chips" id="chips-wrap">
+      <div class="methali-rotate" id="methali-box"></div>
+<div class="chips" id="chips-wrap">
         <span class="chip" onclick="chip(this)">Natafuta kazi 💼</span>
         <span class="chip" onclick="chip(this)">Biashara ndogo bila mtaji 🛒</span>
         <span class="chip" onclick="chip(this)">Digital skills za bure 📱</span>
@@ -181,7 +184,51 @@ function chip(el){send(el.textContent.replace(/[💼🛒📱💰😕]/g,'').trim
 function onKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}}
 function resize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,110)+'px'}
 function updateBtn(){document.getElementById('sbtn').disabled=!document.getElementById('inp').value.trim()||busy}
-setTimeout(()=>addMsg('bot',T[lang].welcome),700);
+// ── Rotating methali ──
+const METHALI = [
+  "Haba na haba hujaza kibaba.",
+  "Kupotea njia ndio kujua njia.",
+  "Bidii huleta fanaka.",
+  "Umoja ni nguvu, utengano ni udhaifu.",
+  "Achanikaye kwa mpini hafi kwa njaa.",
+  "Haraka haraka haina baraka.",
+  "Kazi ni pato, uvivu ni hasara.",
+  "Fanikio huzaa fanikio.",
+  "Mtu ni watu.",
+  "Subira huvuta heri."
+];
+
+let methaliIndex = Math.floor(Math.random() * METHALI.length);
+function rotateMethali() {
+  const box = document.getElementById('methali-box');
+  if (!box) return;
+  box.classList.add('fade');
+  setTimeout(() => {
+    methaliIndex = (methaliIndex + 1) % METHALI.length;
+    box.textContent = '"' + METHALI[methaliIndex] + '"';
+    box.classList.remove('fade');
+  }, 800);
+}
+// Set first methali immediately
+const methaliBox = document.getElementById('methali-box');
+if (methaliBox) methaliBox.textContent = '"' + METHALI[methaliIndex] + '"';
+// Rotate every 5 seconds
+setInterval(rotateMethali, 5000);
+
+// ── Time-aware welcome ──
+function getTimeGreeting() {
+  const hour = new Date().getHours();
+  if (hour >= 5 && hour < 12) return { sw: 'Habari za asubuhi! 🌅', en: 'Good morning! 🌅' };
+  if (hour >= 12 && hour < 16) return { sw: 'Habari za mchana! ☀️', en: 'Good afternoon! ☀️' };
+  if (hour >= 16 && hour < 20) return { sw: 'Habari za jioni! 🌇', en: 'Good evening! 🌇' };
+  return { sw: 'Habari za usiku! 🌙', en: 'Good evening! 🌙' };
+}
+
+const greeting = getTimeGreeting();
+T.sw.welcome = greeting.sw + ` Mimi ni Rafiki wako wa Vijana, niko hapa Dar es Salaam nikiwa tayari kukusaidia.\n\nNiambie — leo unakabiliwa na changamoto gani? Tuzungumze! 😊`;
+T.en.welcome = greeting.en + ` I am Rafiki, your Youth Advisor in Dar es Salaam, ready to help you.\n\nTell me — what challenge are you facing today? Let's talk! 😊`;
+
+setTimeout(() => addMsg('bot', T[lang].welcome), 700);
 </script>
 </body>
 </html>
